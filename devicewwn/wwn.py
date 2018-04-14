@@ -5,7 +5,7 @@ import re
 
 __author__ = 'Julien B.'
 __license__ = 'GPLv3'
-__version__ = '0.5'
+__version__ = '0.6'
 __status__ = 'Production'
 
 

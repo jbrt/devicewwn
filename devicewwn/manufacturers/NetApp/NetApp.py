@@ -7,7 +7,7 @@ from devicewwn.wwn import WWN, WWNInvalidError
 
 __author__ = 'Julien B. (jbrt)'
 __license__ = 'GPLv3'
-__version__ = '0.5'
+__version__ = '0.6'
 __status__ = 'Production'
 
 

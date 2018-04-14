@@ -5,7 +5,7 @@ from devicewwn.wwn import WWN, WWNInvalidError
 
 __author__ = 'Julien B. (jbrt)'
 __license__ = 'GPLv3'
-__version__ = '0.5'
+__version__ = '0.6'
 __status__ = 'Production'
 
 
@@ -15,7 +15,10 @@ class EmcVnxWWNError(WWNInvalidError):
 
 
 class EmcVnxWWN(WWN):
-    """ Decoding of VNX WWN NOT YET IMPLEMENTED !! """
+    """
+    Decoding of VNX WWN (with the contribution of Stanislav M.
+    thank you, Stanislav ! :-)
+    """
 
     def __init__(self, address):
         super(EmcVnxWWN, self).__init__(address)
@@ -24,9 +27,16 @@ class EmcVnxWWN(WWN):
             raise EmcVnxWWNError('This not a WWN Vnx !')
 
     def _decodeNaa5(self):
-        raise NotImplementedError
+        # Decode of VNX/Clariion WWN based on
+        # https://prefetch.net/blog/2005/09/26/dissecting-clariion-wwns
+        port = int(self.wwn_nodots[7], 16)
+        if port >= 8:
+            sp = 'SPB'
+            port -= 8
+        else:
+            sp = 'SPA'
+
+        self._decode = 'VNX/Clariion %s port %d' % (sp, port)
 
     def _decodeNaa6(self):
         raise NotImplementedError
-
-# EOF
