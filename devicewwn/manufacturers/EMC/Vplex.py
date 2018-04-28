@@ -3,11 +3,6 @@
 
 from devicewwn.wwn import WWN, WWNInvalidError
 
-__author__ = 'Julien B. (jbrt)'
-__license__ = 'GPLv3'
-__version__ = '0.6'
-__status__ = 'Production'
-
 
 class EmcVplexWWNError(WWNInvalidError):
     def __init__(self, value):
@@ -34,5 +29,3 @@ class EmcVplexWWN(WWN):
         port_number = self.wwn_nodots[-1]
         
         self._decode = 'VPLEX Seed:%s IOModule:%s Port:%s' % (seed, port_type, port_number)
-
-# EOF

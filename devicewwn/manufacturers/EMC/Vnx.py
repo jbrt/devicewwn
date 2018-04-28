@@ -3,11 +3,6 @@
 
 from devicewwn.wwn import WWN, WWNInvalidError
 
-__author__ = 'Julien B. (jbrt)'
-__license__ = 'GPLv3'
-__version__ = '0.6'
-__status__ = 'Production'
-
 
 class EmcVnxWWNError(WWNInvalidError):
     def __init__(self, value):

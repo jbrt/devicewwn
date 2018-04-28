@@ -3,11 +3,6 @@
 
 from devicewwn.wwn import WWN, WWNInvalidError
 
-__author__ = 'Julien B. (jbrt)'
-__license__ = 'GPLv3'
-__version__ = '0.6'
-__status__ = 'Production'
-
 
 class IbmNpivWWNError(WWNInvalidError):
     def __init__(self, value):
@@ -27,5 +22,3 @@ class IbmNpivWWN(WWN):
 
     def _decodeNaa6(self):
         raise NotImplementedError
-
-# EOF

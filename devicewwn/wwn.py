@@ -3,11 +3,6 @@
 
 import re
 
-__author__ = 'Julien B.'
-__license__ = 'GPLv3'
-__version__ = '0.6'
-__status__ = 'Production'
-
 
 class WWNInvalidError(ValueError):
     def __init__(self, value):
@@ -132,6 +127,3 @@ class WWN(object):
     def wwn_to_binary(self):
         """ Get the WWN encoded to binary form """
         return bin(int(self.wwn_nodots, 16))[2:]
-
-
-# EOF

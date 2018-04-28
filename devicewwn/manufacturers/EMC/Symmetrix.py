@@ -2,13 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import binascii
-
 from devicewwn.wwn import WWN, WWNInvalidError
-
-__author__ = 'Julien B. (jbrt)'
-__license__ = 'GPLv3'
-__version__ = '0.6'
-__status__ = 'Production'
 
 
 class EmcDmxWWNError(WWNInvalidError):
@@ -133,5 +127,3 @@ class EmcVmaxWWN(WWN):
         hve = str(binascii.unhexlify(self.wwn_nodots[-offset:]), 'UTF-8')
         
         self._decode = '%s S/N:%s HVE:%s' % (model, serial, hve)
-    
-# EOF

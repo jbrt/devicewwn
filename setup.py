@@ -3,13 +3,20 @@
 
 from setuptools import setup, find_packages
 
+
+def readme():
+    with open('README.rst') as fh:
+        return fh.read()
+
+
 setup(
     name="devicewwn",
-    version="0.6",
+    version="0.6.3",
     packages=find_packages(),
     author="Julien B.",
     author_email="julien@toshokan.fr",
     description="Manipulating Fibre Channel WWN easily with decoding capabilities",
+    long_description=readme(),
     license="GPLv3",
     keywords="WWN SAN storage EMC Symmetrix VMAX NetApp Fibre Channel",
     url="http://github.com/jbrt/devicewwn",

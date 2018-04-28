@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from .manufacturers.EMC.Symmetrix import EmcVmaxWWN, EmcDmxWWN
-from .manufacturers.EMC.Vnx import EmcVnxWWN
-from .manufacturers.EMC.Vplex import EmcVplexWWN
-from .manufacturers.IBM.NPIV import IbmNpivWWN
-from .manufacturers.NetApp.NetApp import NetappFasWWN
-from .wwn import WWN, WWNInvalidError
-
-__author__ = 'Julien B. (jbrt)'
-__license__ = 'GPLv3'
-__version__ = '0.6'
-__status__ = 'Production'
+from devicewwn.manufacturers.EMC.Symmetrix import EmcVmaxWWN, EmcDmxWWN
+from devicewwn.manufacturers.EMC.Vnx import EmcVnxWWN
+from devicewwn.manufacturers.EMC.Vplex import EmcVplexWWN
+from devicewwn.manufacturers.IBM.NPIV import IbmNpivWWN
+from devicewwn.manufacturers.NetApp.NetApp import NetappFasWWN
+from devicewwn.wwn import WWN, WWNInvalidError
 
 
 class WWNFactoryError(Exception):
@@ -20,12 +15,17 @@ class WWNFactoryError(Exception):
 
 
 class WWNFactory(object):
-    """ This class can create objects WWN without knowing the manufacturer from which they come """
+    """
+    This class can create objects WWN without knowing the manufacturer
+    from which they come
+    """
     
     _instance = None
     
     def __new__(cls):
-        """ Singleton constructor : only one instance of this factory is allowed """
+        """ Singleton constructor : only one instance of this factory is
+        allowed
+        """
 
         if not cls._instance:
             cls._instance = super(WWNFactory, cls).__new__(cls)
@@ -65,5 +65,3 @@ class WWNFactory(object):
             wwn_created = new_wwn
 
         return wwn_created
-
-# EOF
