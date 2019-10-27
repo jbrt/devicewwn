@@ -34,10 +34,12 @@ class EmcVplexWWN(WWN):
         if self.oui not in '00:01:44':
             raise EmcVplexWWNError('This not a WWN Vplex !')
 
-    def _decodeNaa5(self):
+    def _decode_naa5(self):
         seed = self.wwn_nodots[9:14]
         port_type = self.io_module[self.wwn_nodots[14]] if self.wwn_nodots[14] in self.io_module else '(Unknown)'
         port_number = self.wwn_nodots[-1]
-        
         self._decode = 'VPLEX Seed:%s IOModule:%s Port:%s' % \
                        (seed, port_type, port_number)
+
+    def _decode_naa6(self):
+        raise NotImplementedError

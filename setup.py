@@ -22,7 +22,7 @@ setup(
     description="Manipulating Fibre Channel WWN easily with decoding capabilities",
     long_description=readme(),
     license="GPLv3",
-    keywords="WWN SAN storage EMC Symmetrix VMAX NetApp Fibre Channel",
+    keywords="WWN SAN storage EMC Symmetrix VMAX netapp Fibre Channel",
     url="http://github.com/jbrt/devicewwn",
     classifiers=[
         "Development Status :: 5 - Production/Stable",

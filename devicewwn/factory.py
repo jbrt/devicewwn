@@ -5,11 +5,11 @@
 Factory pattern used for building the right WWN object
 """
 
-from devicewwn.manufacturers.EMC.Symmetrix import EmcVmaxWWN, EmcDmxWWN
-from devicewwn.manufacturers.EMC.Vnx import EmcVnxWWN
-from devicewwn.manufacturers.EMC.Vplex import EmcVplexWWN
-from devicewwn.manufacturers.IBM.NPIV import IbmNpivWWN
-from devicewwn.manufacturers.NetApp.NetApp import NetappFasWWN
+from devicewwn.manufacturers.emc.symmetrix import EmcVmaxWWN, EmcDmxWWN
+from devicewwn.manufacturers.emc.vnx import EmcVnxWWN
+from devicewwn.manufacturers.emc.vplex import EmcVplexWWN
+from devicewwn.manufacturers.ibm.npiv import IbmNpivWWN
+from devicewwn.manufacturers.netapp.netapp import NetappFasWWN
 from devicewwn.wwn import WWN, WWNInvalidError
 
 

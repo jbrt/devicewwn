@@ -29,17 +29,17 @@ class EmcVnxWWN(WWN):
         if self.oui not in '00:60:16':
             raise EmcVnxWWNError('This not a WWN Vnx !')
 
-    def _decodeNaa5(self):
+    def _decode_naa5(self):
         # Decode of VNX/Clariion WWN based on
         # https://prefetch.net/blog/2005/09/26/dissecting-clariion-wwns
         port = int(self.wwn_nodots[7], 16)
         if port >= 8:
-            sp = 'SPB'
+            service_processor = 'SPB'
             port -= 8
         else:
-            sp = 'SPA'
+            service_processor = 'SPA'
 
-        self._decode = 'VNX/Clariion %s port %d' % (sp, port)
+        self._decode = 'VNX/Clariion %s port %d' % (service_processor, port)
 
-    def _decodeNaa6(self):
+    def _decode_naa6(self):
         raise NotImplementedError

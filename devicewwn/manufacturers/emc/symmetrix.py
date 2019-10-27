@@ -20,8 +20,8 @@ class EmcDmxWWNError(WWNInvalidError):
 
 class EmcDmxWWN(WWN):
     """
-    Decode WWN from EMC DMX Arrays
-    Based on EMC KB Articles: 000323236(DMX) and 000322895
+    Decode WWN from emc DMX Arrays
+    Based on emc KB Articles: 000323236(DMX) and 000322895
     """
     processor = {'00': 'A',
                  '01': 'B',
@@ -31,10 +31,10 @@ class EmcDmxWWN(WWN):
     def __init__(self, address):
         super(EmcDmxWWN, self).__init__(address)
 
-        if not self.oui == '00:60:48':
+        if self.oui != '00:60:48':
             raise EmcDmxWWNError('This not a WWN DMX !')
 
-    def _decodeNaa5(self):
+    def _decode_naa5(self):
         digit = self.wwn_to_binary
         half_bit = digit[27]
         side_bit = digit[57]
@@ -47,12 +47,12 @@ class EmcDmxWWN(WWN):
                                                         self.processor[half_bit+side_bit],
                                                         'A' if port_bit == '0' else 'B')
 
-    def _decodeNaa6(self):
+    def _decode_naa6(self):
         serial = self.wwn_nodots[8:20]
         hve = str(binascii.unhexlify(self.wwn_nodots[-12:]), 'UTF-8')
         self._decode = 'DMX S/N:%s HVE:%s' % (serial, hve)
 
-    
+
 class EmcVmaxWWNError(WWNInvalidError):
     """
     Generic VMAX Exception
@@ -64,8 +64,8 @@ class EmcVmaxWWNError(WWNInvalidError):
 
 class EmcVmaxWWN(WWN):
     """
-    Decode WWN from EMC VMAX, VMAX2 and VMAX3 Arrays
-    Based on EMC KB Articles: 000323234(VMAX3) and 000333474(VMAX1&2)
+    Decode WWN from emc VMAX, VMAX2 and VMAX3 Arrays
+    Based on emc KB Articles: 000323234(VMAX3) and 000333474(VMAX1&2)
     """
 
     # Bits that's describe the VMAX location
@@ -106,11 +106,10 @@ class EmcVmaxWWN(WWN):
 
     def __init__(self, address):
         super(EmcVmaxWWN, self).__init__(address)
-     
-        if not self.oui == '00:00:97':
+        if self.oui != '00:00:97':
             raise EmcVmaxWWNError('This not a WWN Vmax !')
 
-    def _decodeNaa5(self):
+    def _decode_naa5(self):
         digit = self.wwn_to_binary
         location = self.location[digit[27:30]] if digit[27:30] in self.location else '(Unknown)'
 
@@ -121,7 +120,7 @@ class EmcVmaxWWN(WWN):
         serial = "%05d" % int(digit[mask['serial']], 2)
         director = str(int(digit[mask['director']], 2)+1)
         port = str(int(digit[mask['port']], 2))
-        
+
         # if mask is vmax2: then we need to extract letter
         letter = ''
         if mask is self.vmax2_mask:
@@ -132,10 +131,9 @@ class EmcVmaxWWN(WWN):
                                                            director, letter,
                                                            port)
 
-    def _decodeNaa6(self):
+    def _decode_naa6(self):
         serial = self.wwn_nodots[8:20]
         vmax_model = ('26', '49', '57', '59', '87')
-
         # Offset on VMAX and VMAX2 = 8 / VMAX3 = 10
         # because HVE VMAX1 & 2 == 4 char. / VMAX == 5 char.
         offset = 8 if serial[5:7] in vmax_model else 10

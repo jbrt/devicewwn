@@ -5,6 +5,7 @@
 WWN object used for manipulating and comparing WWN addresses
 """
 
+import abc
 import re
 
 
@@ -34,10 +35,10 @@ class WWN:
         self._decode = ''
 
         if self._address[0] == '5':
-            self._decodeNaa5()
+            self._decode_naa5()
 
         if self._address[0] == '6':
-            self._decodeNaa6()
+            self._decode_naa6()
 
     @classmethod
     def _normalize(cls, address: str):
@@ -58,13 +59,13 @@ class WWN:
         cls._address = address if ':' in address else ':'.join(re.findall('..', address))
         return cls._address.lower()
 
-    def _decodeNaa5(self):
-        """ Methode used for decoding NAA5 WWN """
-        pass
+    @abc.abstractmethod
+    def _decode_naa5(self):
+        """ Method used for decoding NAA5 WWN """
 
-    def _decodeNaa6(self):
-        """ Methode used for decoding NAA6 WWN """
-        pass
+    @abc.abstractmethod
+    def _decode_naa6(self):
+        """ Method used for decoding NAA6 WWN """
 
     def __eq__(self, other):
         # if the other object is a 'str', we try a conversion
@@ -107,12 +108,12 @@ class WWN:
         first_digit = self._address[0]
 
         if first_digit not in ('1', '2', '5', '6', 'c'):
-            raise WWNInvalidError('No normalized NAA') 
+            raise WWNInvalidError('No normalized NAA')
 
-        if first_digit == '1' or first_digit == '2':
+        if first_digit in ('1', '2'):
             oui = self.wwn_nodots[4:10]
 
-        if first_digit == '5' or first_digit == '6':
+        if first_digit in ('5', '6'):
             oui = self.wwn_nodots[1:8]
 
         # AIX NPIV special case (all NPIV LPAR WWN starts by 'c0')

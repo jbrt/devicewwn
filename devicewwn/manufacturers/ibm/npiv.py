@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-IBM WWN
+ibm WWN
 """
 
 from devicewwn.wwn import WWN, WWNInvalidError
@@ -10,26 +10,26 @@ from devicewwn.wwn import WWN, WWNInvalidError
 
 class IbmNpivWWNError(WWNInvalidError):
     """
-    Generic IBM Exception
+    Generic ibm Exception
     """
     def __init__(self, value):
-        super(IbmNpivWWNError, self).__init__("Invalid IBM WWN: {0!r}".
+        super(IbmNpivWWNError, self).__init__("Invalid ibm WWN: {0!r}".
                                               format(value))
 
 
 class IbmNpivWWN(WWN):
     """
-    Class for handling IBM WWN
+    Class for handling ibm WWN
     """
 
     def __init__(self, address):
         super(IbmNpivWWN, self).__init__(address)
 
-        if not self.oui == '00:50:76':
-            raise IbmNpivWWNError('This not a IBM NPIV WWN !')
+        if self.oui != '00:50:76':
+            raise IbmNpivWWNError('This not a ibm NPIV WWN !')
 
-    def _decodeNaa5(self):
+    def _decode_naa5(self):
         raise NotImplementedError
 
-    def _decodeNaa6(self):
+    def _decode_naa6(self):
         raise NotImplementedError

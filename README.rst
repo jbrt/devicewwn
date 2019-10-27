@@ -1,6 +1,9 @@
 Device WWN
 ==========
 
+.. image:: https://travis-ci.com/jbrt/devicewwn.svg?branch=master
+    :target: https://travis-ci.com/jbrt/devicewwn
+
 This package provide a simple way to manipulate Fibre Channel WWN in a
 SAN Storage environment with decoding capabilities. Most of storage
 manufacturers encodes some information in the WWN of their equipment
