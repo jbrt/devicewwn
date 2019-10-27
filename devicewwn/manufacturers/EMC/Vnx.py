@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
+"""
+VNX WWN
+"""
 
 from devicewwn.wwn import WWN, WWNInvalidError
 
 
 class EmcVnxWWNError(WWNInvalidError):
+    """
+    Generic VNX Exception
+    """
     def __init__(self, value):
-        super(EmcVnxWWNError, self).__init__("Invalid VNX WWN: {0!r}".format(value))
+        super(EmcVnxWWNError, self).__init__("Invalid VNX WWN: {0!r}".
+                                             format(value))
 
 
 class EmcVnxWWN(WWN):

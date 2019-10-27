@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
+"""
+Factory pattern used for building the right WWN object
+"""
 
 from devicewwn.manufacturers.EMC.Symmetrix import EmcVmaxWWN, EmcDmxWWN
 from devicewwn.manufacturers.EMC.Vnx import EmcVnxWWN
@@ -10,26 +14,30 @@ from devicewwn.wwn import WWN, WWNInvalidError
 
 
 class WWNFactoryError(Exception):
+    """
+    Generic Factory Exception
+    """
     def __init__(self, value):
-        super(WWNFactoryError, self).__init__("WWN Factory error: {0!r}".format(value))
+        super(WWNFactoryError, self).__init__("WWN Factory error: {0!r}".
+                                              format(value))
 
 
-class WWNFactory(object):
+class WWNFactory:
     """
     This class can create objects WWN without knowing the manufacturer
     from which they come
     """
-    
     _instance = None
-    
+
     def __new__(cls):
-        """ Singleton constructor : only one instance of this factory is
+        """
+        Singleton constructor : only one instance of this factory is
         allowed
         """
 
         if not cls._instance:
             cls._instance = super(WWNFactory, cls).__new__(cls)
-    
+
         return cls._instance
 
     def __init__(self):
@@ -43,24 +51,21 @@ class WWNFactory(object):
                          '0a:98:00': NetappFasWWN,
                          '00:50:76': IbmNpivWWN}
 
-    def create(self, address):
-        """ Create a WWN object
-
-            :param address: String to convert
-            :type address: str
-            :except WWNFactoryError
+    def create(self, address: str) -> WWN:
         """
-        
+        Create a WWN object
+        :param address: String to convert
+        :type address: str
+        :except WWNFactoryError
+        """
         try:
             new_wwn = WWN(address)
-
         except WWNInvalidError:
             raise WWNFactoryError
 
         if new_wwn.oui in self._classes:
             wwn_created = self._classes[new_wwn.oui](new_wwn.wwn)
             del new_wwn
-            
         else:
             wwn_created = new_wwn
 

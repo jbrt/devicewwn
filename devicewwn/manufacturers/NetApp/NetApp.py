@@ -1,17 +1,27 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
+"""
+NetApp WWN
+"""
 
 import binascii
-
 from devicewwn.wwn import WWN, WWNInvalidError
 
 
 class NetappFasWWNError(WWNInvalidError):
+    """
+    Generic NetAPP Exception
+    """
     def __init__(self, value):
-        super(NetappFasWWNError, self).__init__("Invalid NetApp WWN: {0!r}".format(value))
+        super(NetappFasWWNError, self).__init__("Invalid NetApp WWN: {0!r}".
+                                                format(value))
 
 
 class NetappFasWWN(WWN):
+    """
+    Generic class for handling NetApp WWN
+    """
 
     def __init__(self, address):
         super(NetappFasWWN, self).__init__(address)

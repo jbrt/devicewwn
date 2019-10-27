@@ -1,23 +1,33 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
+"""
+WWN object used for manipulating and comparing WWN addresses
+"""
 
 import re
 
 
 class WWNInvalidError(ValueError):
+    """
+    Generic WWN Exception
+    """
     def __init__(self, value):
-        super(WWNInvalidError, self).__init__("Invalid FC address: {0!r}".format(value))
+        super(WWNInvalidError, self).__init__("Invalid FC address: {0!r}".
+                                              format(value))
 
 
-class WWN(object):
-    """ Main class of the package - create WWN object """
+class WWN:
+    """
+    Main class of the package - create WWN object
+    """
 
-    def __init__(self, address):
-        """ Constructor
-
-            :param address: String representing a WWN object (with ':' or not)
-            :type address: str
-            :except WWNInvalidError:
+    def __init__(self, address: str):
+        """
+        Constructor
+        :param address: String representing a WWN object (with ':' or not)
+        :type address: str
+        :except WWNInvalidError:
         """
         super(WWN, self).__init__()
         self._address = address.wwn if isinstance(address, WWN) else self._normalize(address)
@@ -30,12 +40,12 @@ class WWN(object):
             self._decodeNaa6()
 
     @classmethod
-    def _normalize(cls, address):
-        """ Class method used for nomalize a WWN
-
-            :param address: String to normalize (contains ':' or not)
-            :type address: str
-            :except WWNInvalidError:
+    def _normalize(cls, address: str):
+        """
+        Class method used for normalize a WWN
+        :param address: String to normalize (contains ':' or not)
+        :type address: str
+        :except WWNInvalidError:
         """
         regexps = [re.compile("^([0-9a-fA-F]{16})$"),
                    re.compile("^([0-9a-fA-F]{32})$"),
@@ -45,8 +55,7 @@ class WWN(object):
         if not any(one_regexp.match(address) for one_regexp in regexps):
             raise WWNInvalidError(address)
 
-        cls._address = address if ':' in address else ':'.join(re.findall('..', address))         
-        
+        cls._address = address if ':' in address else ':'.join(re.findall('..', address))
         return cls._address.lower()
 
     def _decodeNaa5(self):
@@ -80,27 +89,26 @@ class WWN(object):
 
     @property
     def decode(self):
-        """ Extract the data encoded in the WWN
-
-            :return: Data encoded in the WWN
-            :rtype: str
+        """
+        Extract the data encoded in the WWN
+        :return: Data encoded in the WWN
+        :rtype: str
         """
         return self._decode
 
     @property
     def oui(self):
-        """ Get the OUI (Organization Unique Identifier) of the WWN
-
-            :return: OUI string
-            :rtype: str
         """
-        
+        Get the OUI (Organization Unique Identifier) of the WWN
+        :return: OUI string
+        :rtype: str
+        """
         oui = ''
         first_digit = self._address[0]
 
         if first_digit not in ('1', '2', '5', '6', 'c'):
             raise WWNInvalidError('No normalized NAA') 
-        
+
         if first_digit == '1' or first_digit == '2':
             oui = self.wwn_nodots[4:10]
 

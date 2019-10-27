@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
+"""
+Package installation
+"""
 
 from setuptools import setup, find_packages
 
@@ -11,7 +15,7 @@ def readme():
 
 setup(
     name="devicewwn",
-    version="0.6.3",
+    version="0.6.4",
     packages=find_packages(),
     author="Julien B.",
     author_email="julien@toshokan.fr",
