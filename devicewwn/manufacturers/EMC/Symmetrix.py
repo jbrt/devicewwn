@@ -1,18 +1,27 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
+"""
+EMC WWN (Symmetrix & VMAX)
+"""
 
 import binascii
 from devicewwn.wwn import WWN, WWNInvalidError
 
 
 class EmcDmxWWNError(WWNInvalidError):
+    """
+    Generic DMX Exception
+    """
     def __init__(self, value):
-        super(EmcDmxWWNError, self).__init__("Invalid DMX WWN: {0!r}".format(value))
+        super(EmcDmxWWNError, self).__init__("Invalid DMX WWN: {0!r}".
+                                             format(value))
 
 
 class EmcDmxWWN(WWN):
-    """ Decode WWN from EMC DMX Arrays
-        Based on EMC KB Articles: 000323236(DMX) and 000322895
+    """
+    Decode WWN from EMC DMX Arrays
+    Based on EMC KB Articles: 000323236(DMX) and 000322895
     """
     processor = {'00': 'A',
                  '01': 'B',
@@ -27,10 +36,9 @@ class EmcDmxWWN(WWN):
 
     def _decodeNaa5(self):
         digit = self.wwn_to_binary
-
         half_bit = digit[27]
         side_bit = digit[57]
-        serial = digit[29:57]
+        serial = digit[28:57]
         port_bit = digit[58]
         slot_bit = digit[59:]
 
@@ -46,13 +54,18 @@ class EmcDmxWWN(WWN):
 
     
 class EmcVmaxWWNError(WWNInvalidError):
+    """
+    Generic VMAX Exception
+    """
     def __init__(self, value):
-        super(EmcVmaxWWNError, self).__init__("Invalid VMAX WWN: {0!r}".format(value))
+        super(EmcVmaxWWNError, self).__init__("Invalid VMAX WWN: {0!r}".
+                                              format(value))
 
 
 class EmcVmaxWWN(WWN):
-    """ Decode WWN from EMC VMAX, VMAX2 and VMAX3 Arrays
-        Based on EMC KB Articles: 000323234(VMAX3) and 000333474(VMAX1&2)
+    """
+    Decode WWN from EMC VMAX, VMAX2 and VMAX3 Arrays
+    Based on EMC KB Articles: 000323234(VMAX3) and 000333474(VMAX1&2)
     """
 
     # Bits that's describe the VMAX location
@@ -114,7 +127,10 @@ class EmcVmaxWWN(WWN):
         if mask is self.vmax2_mask:
             letter = self.vdir_letter[digit[53:57]] if digit[53:57] in self.vdir_letter else '(Unknown)'
 
-        self._decode = "%s S/N:%s%s%s Dir:%s%s Port:%s" % (model, location, vtype, serial, director, letter, port)
+        self._decode = "%s S/N:%s%s%s Dir:%s%s Port:%s" % (model, location,
+                                                           vtype, serial,
+                                                           director, letter,
+                                                           port)
 
     def _decodeNaa6(self):
         serial = self.wwn_nodots[8:20]
@@ -125,5 +141,4 @@ class EmcVmaxWWN(WWN):
         offset = 8 if serial[5:7] in vmax_model else 10
         model = 'VMAX' if serial[5:7] in vmax_model else 'VMAX3'
         hve = str(binascii.unhexlify(self.wwn_nodots[-offset:]), 'UTF-8')
-        
         self._decode = '%s S/N:%s HVE:%s' % (model, serial, hve)
