@@ -4,7 +4,6 @@
 Unittest for WWN class
 """
 
-import pytest
 from devicewwn.factory import WWNFactory
 
 FACTORY = WWNFactory()

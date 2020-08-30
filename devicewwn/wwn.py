@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # coding: utf-8
 
 """
@@ -14,8 +13,7 @@ class WWNInvalidError(ValueError):
     Generic WWN Exception
     """
     def __init__(self, value):
-        super(WWNInvalidError, self).__init__("Invalid FC address: {0!r}".
-                                              format(value))
+        super().__init__(f"Invalid FC address: {value}")
 
 
 class WWN:
@@ -30,7 +28,7 @@ class WWN:
         :type address: str
         :except WWNInvalidError:
         """
-        super(WWN, self).__init__()
+        super().__init__()
         self._address = address.wwn if isinstance(address, WWN) else self._normalize(address)
         self._decode = ''
 
@@ -82,7 +80,7 @@ class WWN:
         return self._address == other._address
 
     def __repr__(self):
-        return "<%s(%s)>" % (self.__class__.__name__, self._address)
+        return f"<{self.__class__.__name__}({self._address})>"
 
     def __str__(self):
         # By convention the NAA5 WWNs are represented with ':', NAA6 not

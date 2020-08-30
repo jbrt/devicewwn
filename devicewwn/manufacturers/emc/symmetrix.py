@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # coding: utf-8
 
 """
@@ -14,8 +13,7 @@ class EmcDmxWWNError(WWNInvalidError):
     Generic DMX Exception
     """
     def __init__(self, value):
-        super(EmcDmxWWNError, self).__init__("Invalid DMX WWN: {0!r}".
-                                             format(value))
+        super().__init__(f"Invalid DMX WWN: {value}")
 
 
 class EmcDmxWWN(WWN):
@@ -29,7 +27,7 @@ class EmcDmxWWN(WWN):
                  '11': 'D'}
 
     def __init__(self, address):
-        super(EmcDmxWWN, self).__init__(address)
+        super().__init__(address)
 
         if self.oui != '00:60:48':
             raise EmcDmxWWNError('This not a WWN DMX !')
@@ -42,15 +40,14 @@ class EmcDmxWWN(WWN):
         port_bit = digit[58]
         slot_bit = digit[59:]
 
-        self._decode = 'DMX S/N:%d Dir:%d%s Port:%s' % (int(serial, 2),
-                                                        int(slot_bit, 2)+1,
+        self._decode = 'DMX S/N:%d Dir:%d%s Port:%s' % (int(serial, 2), int(slot_bit, 2)+1,
                                                         self.processor[half_bit+side_bit],
                                                         'A' if port_bit == '0' else 'B')
 
     def _decode_naa6(self):
         serial = self.wwn_nodots[8:20]
         hve = str(binascii.unhexlify(self.wwn_nodots[-12:]), 'UTF-8')
-        self._decode = 'DMX S/N:%s HVE:%s' % (serial, hve)
+        self._decode = f'DMX S/N:{serial} HVE:{hve}'
 
 
 class EmcVmaxWWNError(WWNInvalidError):
@@ -58,8 +55,7 @@ class EmcVmaxWWNError(WWNInvalidError):
     Generic VMAX Exception
     """
     def __init__(self, value):
-        super(EmcVmaxWWNError, self).__init__("Invalid VMAX WWN: {0!r}".
-                                              format(value))
+        super().__init__(f"Invalid VMAX WWN: {value}")
 
 
 class EmcVmaxWWN(WWN):
@@ -105,7 +101,7 @@ class EmcVmaxWWN(WWN):
                   'port': slice(57, 63)}
 
     def __init__(self, address):
-        super(EmcVmaxWWN, self).__init__(address)
+        super().__init__(address)
         if self.oui != '00:00:97':
             raise EmcVmaxWWNError('This not a WWN Vmax !')
 
@@ -126,10 +122,7 @@ class EmcVmaxWWN(WWN):
         if mask is self.vmax2_mask:
             letter = self.vdir_letter[digit[53:57]] if digit[53:57] in self.vdir_letter else '(Unknown)'
 
-        self._decode = "%s S/N:%s%s%s Dir:%s%s Port:%s" % (model, location,
-                                                           vtype, serial,
-                                                           director, letter,
-                                                           port)
+        self._decode = f"{model} S/N:{location}{vtype}{serial} Dir:{director}{letter} Port:{port}"
 
     def _decode_naa6(self):
         serial = self.wwn_nodots[8:20]
@@ -139,4 +132,4 @@ class EmcVmaxWWN(WWN):
         offset = 8 if serial[5:7] in vmax_model else 10
         model = 'VMAX' if serial[5:7] in vmax_model else 'VMAX3'
         hve = str(binascii.unhexlify(self.wwn_nodots[-offset:]), 'UTF-8')
-        self._decode = '%s S/N:%s HVE:%s' % (model, serial, hve)
+        self._decode = f'{model} S/N:{serial} HVE:{hve}'

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # coding: utf-8
 
 """
@@ -18,8 +17,7 @@ class WWNFactoryError(Exception):
     Generic Factory Exception
     """
     def __init__(self, value):
-        super(WWNFactoryError, self).__init__("WWN Factory error: {0!r}".
-                                              format(value))
+        super().__init__(f"WWN Factory error: {value}")
 
 
 class WWNFactory:
@@ -36,12 +34,12 @@ class WWNFactory:
         """
 
         if not cls._instance:
-            cls._instance = super(WWNFactory, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
 
         return cls._instance
 
     def __init__(self):
-        super(WWNFactory, self).__init__()
+        super().__init__()
 
         self._classes = {'00:00:97': EmcVmaxWWN,
                          '00:60:16': EmcVnxWWN,

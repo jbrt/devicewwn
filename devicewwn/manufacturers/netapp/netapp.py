@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # coding: utf-8
 
 """
-netapp WWN
+NetApp WWN
 """
 
 import binascii
@@ -14,8 +13,7 @@ class NetappFasWWNError(WWNInvalidError):
     Generic NetAPP Exception
     """
     def __init__(self, value):
-        super(NetappFasWWNError, self).__init__("Invalid netapp WWN: {0!r}".
-                                                format(value))
+        super().__init__(f"Invalid netapp WWN: {value}")
 
 
 class NetappFasWWN(WWN):
@@ -24,7 +22,7 @@ class NetappFasWWN(WWN):
     """
 
     def __init__(self, address):
-        super(NetappFasWWN, self).__init__(address)
+        super().__init__(address)
 
         if self.oui not in ('00:a0:98', '0a:98:00'):
             raise NetappFasWWNError('This not a WWN netapp !')
@@ -42,4 +40,4 @@ class NetappFasWWN(WWN):
         if self.oui == '0a:98:00':
             mode = '7-Mode'
 
-        self._decode = 'netapp %s LUN Serial#:%s' % (mode, serial)
+        self._decode = f'netapp {mode} LUN Serial#:{serial}'

@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 """
-ibm WWN
+IBM WWN
 """
 
 from devicewwn.wwn import WWN, WWNInvalidError
@@ -13,8 +12,7 @@ class IbmNpivWWNError(WWNInvalidError):
     Generic ibm Exception
     """
     def __init__(self, value):
-        super(IbmNpivWWNError, self).__init__("Invalid ibm WWN: {0!r}".
-                                              format(value))
+        super().__init__(f"Invalid ibm WWN: {value}")
 
 
 class IbmNpivWWN(WWN):
@@ -23,7 +21,7 @@ class IbmNpivWWN(WWN):
     """
 
     def __init__(self, address):
-        super(IbmNpivWWN, self).__init__(address)
+        super().__init__(address)
 
         if self.oui != '00:50:76':
             raise IbmNpivWWNError('This not a ibm NPIV WWN !')

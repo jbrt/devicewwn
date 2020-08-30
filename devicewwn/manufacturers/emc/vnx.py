@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # coding: utf-8
 
 """
@@ -13,8 +12,7 @@ class EmcVnxWWNError(WWNInvalidError):
     Generic VNX Exception
     """
     def __init__(self, value):
-        super(EmcVnxWWNError, self).__init__("Invalid VNX WWN: {0!r}".
-                                             format(value))
+        super().__init__(f"Invalid VNX WWN: {value}")
 
 
 class EmcVnxWWN(WWN):
@@ -24,7 +22,7 @@ class EmcVnxWWN(WWN):
     """
 
     def __init__(self, address):
-        super(EmcVnxWWN, self).__init__(address)
+        super().__init__(address)
 
         if self.oui not in '00:60:16':
             raise EmcVnxWWNError('This not a WWN Vnx !')
@@ -39,7 +37,7 @@ class EmcVnxWWN(WWN):
         else:
             service_processor = 'SPA'
 
-        self._decode = 'VNX/Clariion %s port %d' % (service_processor, port)
+        self._decode = f'VNX/Clariion {service_processor} port {port}'
 
     def _decode_naa6(self):
         raise NotImplementedError
