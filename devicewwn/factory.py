@@ -9,6 +9,7 @@ from devicewwn.manufacturers.emc.vnx import EmcVnxWWN
 from devicewwn.manufacturers.emc.vplex import EmcVplexWWN
 from devicewwn.manufacturers.ibm.npiv import IbmNpivWWN
 from devicewwn.manufacturers.netapp.netapp import NetappFasWWN
+from devicewwn.manufacturers.hitachi.hitachi import Hitachi
 from devicewwn.wwn import WWN, WWNInvalidError
 
 
@@ -47,7 +48,8 @@ class WWNFactory:
                          '00:01:44': EmcVplexWWN,
                          '00:a0:98': NetappFasWWN,
                          '0a:98:00': NetappFasWWN,
-                         '00:50:76': IbmNpivWWN}
+                         '00:50:76': IbmNpivWWN,
+                         '00:60:e8': Hitachi}
 
     def create(self, address: str) -> WWN:
         """
