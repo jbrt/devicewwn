@@ -14,6 +14,7 @@ This package can extract these information for the following devices :
 -  EMC Symmetrix DMX, VMAX and VMAX3
 -  EMC VPLEX
 -  NetApp FAS
+-  Hitachi (thank you @hille721)
 
 **Pull requests are welcome ! :-)**
 
