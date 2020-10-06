@@ -25,7 +25,6 @@ class HitachiWWN(WWN):
         if self.oui != '00:60:e8':
             raise HitachiWWNError('This not a Hitachi !')
 
-
     def _decode_naa6(self):
         serial = str(int(self.wwn_nodots[10:14], 16))
         model = 'Hitachi'
