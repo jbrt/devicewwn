@@ -13,7 +13,7 @@ def readme():
         return fh.read()
 setup(
     name="devicewwn",
-    version="0.7.0",
+    version="0.8.0",
     packages=find_packages(),
     author="Julien B.",
     author_email="julien@toshokan.fr",
