@@ -4,7 +4,6 @@
 Hitachi WWN
 """
 
-import binascii
 from devicewwn.wwn import WWN, WWNInvalidError
 
 
